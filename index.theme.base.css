@@ -1,0 +1,79 @@
+/*此css为主题，所有颜色 图片 字体 边框之类都在theme类css中*/
+
+.nav {
+    background-color: rgba(240, 248, 255, 0.5);
+}
+
+.page {
+    background-color: #ffcbdf;
+}
+
+.head {
+    background-color: aquamarine;
+}
+
+.markblock {
+    background-color: white;
+}
+
+.navbutton {
+    /*    background-color: bisque;*/
+    background-color: rgba(255, 255, 255, 0.6);
+}
+
+.navcont {
+    /*        background-color: burlywood;*/
+}
+
+hr.btn {
+    border: none;
+    margin: 0;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+.navimage {
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.navtext {
+    /*    background-color: aliceblue;*/
+    font-family: "lingxin";
+}
+
+.navinfo {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.navinfo:hover {
+    background-color: rgba(255, 255, 255, 0.65);
+}
+
+
+/*导航栏主题*/
+
+.navactive:after {
+    border-right-color: rgba(255, 255, 255, 0.9);
+}
+
+.navactive:hover:after {
+    border-right-color: rgba(255, 255, 255, 0.6);
+}
+
+
+/*        以上为调试用*/
+
+
+/*个人信息部分*/
+
+.nav_touxiang {
+    text-align: center;
+}
+
+.nav_touxiang>img {
+    border-width: 7px;
+    border-color: rgba(255, 255, 255, 0.9);
+    border-style: solid;
+    border-radius: 25px;
+    margin-top: 10px;
+}

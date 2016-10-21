@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="frame.css">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="index.theme.base.css">
+    <script src="frame.js"></script>
+    <script src="index.js"></script>
+</head>
+
+<body>
+    <div id="domcontainer">
+        <!--        页面dom容器-->
+        <!--        所有的section全都放在这里-->
+        <section class="page" id="blog">blog</section>
+        <section class="page" id="album">album</section>
+        <section class="page" id="info"></section>
+        <section class="page" id="about"></section>
+    </div>
+    <div id='main_viewport' class='viewport'>
+        <section class="page" id="main"> 测试页面</section>
+    </div>
+    <nav id="navplane" class='nav'>
+        <!--        导航栏-->
+        <div class="navinfo">
+            <div class="nav_touxiang">
+                <!--            这是头像部分--><img src="image/touxiang.jpeg" alt="无法显示头像" height="64" width="64">
+                <!--                头像-->
+            </div>
+        </div>
+        <div class="navcont">
+            <div class="navbutton navactive" id="btn1" onclick="pagetrans(this)">
+                <div class="navtext"></div>
+                <div class="navimgcont">
+                    <div class="navimage">
+                        <!--                    图片--><img src="image/nav/home.png" alt="无法显示" height="64" width="64"> </div>
+                </div>
+            </div>
+            <hr class="btn">
+            <div class="navbutton" id="btn2" onclick="pagetrans(this)">
+                <div class="navtext"></div>
+                <div class="navimgcont">
+                    <div class="navimage">
+                        <!--                       图片--><img src="image/nav/blog.png" alt="无法显示" height="64" width="64"> </div>
+                </div>
+            </div>
+            <hr class="btn">
+            <div class="navbutton" id="btn3" onclick="pagetrans(this)">
+                <div class="navtext"></div>
+                <div class="navimgcont">
+                    <div class="navimage"> <img src="image/nav/album.png" alt="无法显示" height="64" width="64"> </div>
+                </div>
+            </div>
+            <hr class="btn">
+            <div class="navbutton" id="btn4" onclick="pagetrans(this)">
+                <div class="navtext"></div>
+                <div class="navimgcont">
+                    <div class="navimage"> <img src="image/nav/info.png" alt="无法显示" height="64" width="64"> </div>
+                </div>
+            </div>
+            <hr class="btn">
+            <div class="navbutton" id="btn5" onclick="pagetrans(this)">
+                <div class="navtext"></div>
+                <div class="navimgcont">
+                    <div class="navimage"> <img src="image/nav/about.png" alt="无法显示" height="64" width="64"> </div>
+                </div>
+            </div>
+            <div>
+                <style>
+                    /*            这里定义navtext里的一些东西*/
+                    
+                    .navtext:after {
+                        content: "";
+                        position: absolute;
+                        top: 50%;
+                        margin-top: -0.5em;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                    }
+                    
+                    #btn1>.navtext:after {
+                        content: "主页"
+                    }
+                    
+                    #btn2>.navtext:after {
+                        content: "博客"
+                    }
+                    
+                    #btn3>.navtext:after {
+                        content: "相册"
+                    }
+                    
+                    #btn4>.navtext:after {
+                        content: "动态"
+                    }
+                    
+                    #btn5>.navtext:after {
+                        content: "关于"
+                    }
+                    /*                    以下为位置定义*/
+                    /*
+                    #btn2 {
+                        top: 5%;
+                    }
+                    
+                    #btn3 {
+                        top: 10%;
+                    }
+                    
+                    #btn4 {
+                        top: 15%;
+                    }
+                    
+                    #btn5 {
+                        top: 20%;
+                    }
+*/
+                </style>
+            </div>
+            <!--            以上为导航栏内容样式定义-->
+        </div>
+    </nav>
+    <div class="markblock" id="mainmb"></div>
+    <header class="head" id="headpage">
+        <!--        这是初始页面-->
+    </header>
+</body>
+
+</html>
