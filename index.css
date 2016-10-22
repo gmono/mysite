@@ -1,9 +1,4 @@
-/*字体相关*/
-
-@font-face {
-    font-family: 'lingxin';
-    src: url('font/mini-lingxin.TTF');
-}
+/*字体定义结束*/
 
 body {
     margin: 0;
@@ -169,6 +164,8 @@ body {
     /*    个人信息栏样式*/
     height: 150px;
     transition: all 0.2s ease-in;
+    overflow: hidden;
+    cursor: default;
 }
 
 hr.btn {
@@ -199,6 +196,85 @@ hr.btn {
 
 
 /*通用样式*/
+
+
+/*头像相关*/
+
+.nav_touxiang {
+    text-align: center;
+    /*    position: relative;*/
+    padding-top: 20px;
+    transition: all 1s ease 0.3s;
+}
+
+.nav_touxiang>img {
+    height: 80px;
+    width: 80px;
+    transition: all 0.3s linear;
+}
+
+.navinfo:hover>.nav_touxiang {
+    padding-top: 5px;
+    /*    transform: translateY(-25px);*/
+}
+
+.navinfo:hover>.nav_touxiang>img {
+    height: 64px;
+    width: 64px;
+    /*    transform: scaleX(0.8) scaleY(0.8);*/
+}
+
+
+/*个人信息相关*/
+
+.navinfo_subinfo,
+.navinfo_mainname {
+    text-align: center;
+    margin: 3px 0 3px 0;
+    font-family: 'kitty-miao';
+    font-size: 10px;
+    font-weight: 500;
+    opacity: 0;
+}
+
+.navinfo_mainname {
+    opacity: 1;
+}
+
+.navinfo_name:before {
+    content: "昵称：";
+}
+
+.navinfo_age:before {
+    content: "年龄：";
+}
+
+.navinfo_xingzuo:before {
+    content: "星座：";
+}
+
+.navinfo:hover>.navinfo_mainname {
+    opacity: 0;
+}
+
+.navinfo:hover>.navinfo_subinfo {
+    opacity: 1;
+}
+
+.navinfo:hover>.navinfo_name {
+    margin-top: -20px;
+}
+
+
+/*信息栏动画*/
+
+.navinfo_mainname {
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.navinfo_subinfo {
+    transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
 
 
 /*

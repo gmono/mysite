@@ -63,3 +63,23 @@ addinit(function () {
     scandom(body, eles); //扫面整个文档
 });
 //以下为工具函数
+function StyleSet(node) {
+    //状态集类
+    this.node = node;
+    this.set = {}; //状态集合
+    this.push = function (stylename) {
+        //这是改变node的style的函数
+        if (this.set[stylename] == undefined) {
+            //如果没有保存了初始状态
+            this.set[stylename] = this.node.style[stylename]; //保存初始状态
+        }
+    };
+    this.pusharray = function (snames) {
+        for (var i = 0; i < snames.length; i++) this.push(snames[i]);
+    }
+    this.close = function () {
+        for (var t in this.set) {
+            this.node.style[t] = this.set[t]; //
+        }
+    }
+}

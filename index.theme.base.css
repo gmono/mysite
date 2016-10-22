@@ -38,7 +38,10 @@ hr.btn {
 
 .navtext {
     /*    background-color: aliceblue;*/
-    font-family: "lingxin";
+    font-family: "jianzhi";
+    font-weight: 500;
+    font-size: 15px;
+    color: hsl(350, 100%, 80%);
 }
 
 .navinfo {
@@ -71,9 +74,27 @@ hr.btn {
 }
 
 .nav_touxiang>img {
-    border-width: 7px;
+    border-width: 2px;
     border-color: rgba(255, 255, 255, 0.9);
     border-style: solid;
     border-radius: 25px;
-    margin-top: 10px;
+}
+
+.navinfo:hover>.nav_touxiang>img {
+    border-width: 7px;
+}
+
+
+/*以下为个人信息相关*/
+
+.navinfo_subinfo,
+.navinfo_mainname {
+    font-family: 'kitty-miao';
+    font-size: 10px;
+    font-weight: 500;
+}
+
+.navinfo_mainname {
+    font-size: 17px;
+    font-weight: 600;
 }
