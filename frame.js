@@ -1,27 +1,30 @@
 String.prototype.format  =   function (args)  {    
-        var  result  =  this;    
-        if  (arguments.length  >  0)  {            
-            if  (arguments.length  ==  1  &&  typeof  (args)  ==  "object")  {            
-                for  (var  key  in  args)  {                
-                    if (args[key] != undefined) {                    
-                        var  reg  =  new  RegExp("({"  +  key  +  "})",  "g");                    
-                        result  =  result.replace(reg,  args[key]);                
-                    }            
-                }        
+    var  result  =  this;    
+    if  (arguments.length  >  0)  {            
+        if  (arguments.length  ==  1  &&  typeof  (args)  ==  "object")  {            
+            for  (var  key  in  args)  {                
+                if (args[key] != undefined) {                    
+                    var  reg  =  new  RegExp("({"  +  key  +  "})",  "g");                    
+                    result  =  result.replace(reg,  args[key]);                
+                }            
             }        
-            else  {            
-                for  (var  i  =  0;  i  <  arguments.length;  i++)  {                
-                    if  (arguments[i]  !=  undefined)  {           //var reg = new RegExp("({[" + i + "]})", "g");//这个在索引大于9时会有问题，谢谢何以笙箫的指出
-                        　　　　　　　　　　　　
-                        var reg = new RegExp("({)" + i + "(})", "g");                    
-                        result  =  result.replace(reg,  arguments[i]);                
-                    }            
-                }        
-            }    
+        }        
+        else  {            
+            for  (var  i  =  0;  i  <  arguments.length;  i++)  {                
+                if  (arguments[i]  !=  undefined)  {           //var reg = new RegExp("({[" + i + "]})", "g");//这个在索引大于9时会有问题，谢谢何以笙箫的指出
+                    　　　　　　　　　　　　
+                    var reg = new RegExp("({)" + i + "(})", "g");                    
+                    result  =  result.replace(reg,  arguments[i]);                
+                }            
+            }        
         }    
-        return  result;
-    }
-    //基础库函数区域
+    }    
+    return  result;
+}
+Array.prototype.contains  =   function (item) {  
+    return  RegExp("\\b" + item + "\\b").test(this);
+};
+//基础库函数区域
 var initlist = [];
 
 function addinit(fun) {
@@ -82,4 +85,56 @@ function StyleSet(node) {
             this.node.style[t] = this.set[t]; //
         }
     }
+}
+
+function GetStringFormArray(arr, schar) {
+    var ret = "";
+    for (var i = 0; i < arr.length; i++) {
+        ret += arr[i];
+        ret += schar;
+    }
+    return ret;
+}
+//类操作函数
+Element.prototype.GetClasses = function () {
+        return this.className.split(' ');
+    }
+    //添加类
+Element.prototype.addClass = function (classname) {
+        var classes = this.GetClasses();
+        classes.push(classname);
+        this.className = GetStringFormArray(classes, ' ');
+    }
+    //删除类
+Element.prototype.removeClass = function (classname) {
+        var classes = this.GetClasses();
+        if (classes.contains(classname)) {
+            classes.splice(classes.indexOf(classname));
+            this.className = GetStringFormArray(classes, ' ');
+        }
+    }
+    //此函数设计错误，js单线程 异步是用任务队列实现的 无法实现此功能
+    //function sleep(ms) {
+    //    var isend = false;
+    //    setTimeout(function () {
+    //        isend = true;
+    //    }, ms);
+    //    while (!isend);
+    //}
+var loader = {};
+loader.loadfile = function (url, fun) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            var text = xhr.responseText;
+            fun(text);
+        }
+    }
+    xhr.send();
+}
+loader.loadToNode = function (node, url) {
+    loader.loadfile(url, function (text) {
+        node.innerHTML = text;
+    });
 }

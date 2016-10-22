@@ -5,11 +5,16 @@
 }
 
 .page {
-    background-color: #ffcbdf;
+    background-color: #ffc0cb;
 }
 
 .head {
-    background-color: aquamarine;
+    background-color: #ffcbcf;
+}
+
+.head>img {
+    height: 100%;
+    width: 100%;
 }
 
 .markblock {

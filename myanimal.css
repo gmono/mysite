@@ -1,0 +1,99 @@
+/*这是动画定义文件*/
+
+@keyframes ani-head {
+    0% {
+        opacity: 0;
+    }
+    25% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0
+    }
+}
+
+.ani-head {
+    animation: ani-head 4s linear 0.1s 1 normal;
+}
+
+
+/*下面是页面切换动画*/
+
+
+/*左平移*/
+
+@keyframes ani-page-left-out {
+    0% {
+        transform: translateX(0%) scaleX(1) scaleY(1);
+    }
+    20% {
+        transform: translateX(0%) scaleX(0.95) scaleY(0.95);
+    }
+    80% {
+        transform: translateX(-130%) scaleX(0.95) scaleY(0.95);
+    }
+    100% {
+        transform: translateX(-130%) scaleX(1) scaleY(1);
+    }
+}
+
+.ani-page-left-out {
+    animation: ani-page-left-out 2s ease 0.1s 1 normal;
+}
+
+@keyframes ani-page-left-in {
+    0% {
+        transform: translateX(130%) scaleX(1) scaleY(1);
+    }
+    20% {
+        transform: translateX(130%) scaleX(0.95) scaleY(0.95);
+    }
+    80% {
+        transform: translateX(0%) scaleX(0.95) scaleY(0.95);
+    }
+    100% {
+        transform: translateX(0%) scaleX(1) scaleY(1);
+    }
+}
+
+.ani-page-left-in {
+    animation: ani-page-left-in 2s ease 0.1s 1 normal;
+}
+
+
+/*淡入淡出*/
+
+@keyframes ani-page-yin {
+    0% {
+        opacity: 1;
+    }
+    25 {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes ani-page-xian {
+    0% {
+        opacity: 0;
+    }
+    25 {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.ani-page-yin {
+    animation: ani-page-yin 1.5s ease-out 0.1s 1 normal;
+}
+
+.ani-page-xian {
+    animation: ani-page-xian 1.5s ease-in 0.1s 1 normal;
+}
