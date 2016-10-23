@@ -1,0 +1,14 @@
+/*page的公用样式*/
+
+.page-container {
+    height: 100%;
+    width: 100%;
+}
+
+.page-container-img {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}

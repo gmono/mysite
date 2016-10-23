@@ -20,10 +20,10 @@ addinit(function () {
         eles.headpage.addClass('ani-head');
         setTimeout(function () {
             eles.domcontainer.appendChild(eles.mainmb);
-        }, 1500 + 100); //1500正好在静置时间中 避免临界导致的问题 100为延迟
+        }, 2700); //1500正好在静置时间中 避免临界导致的问题 100为延迟
         setTimeout(function () {
             eles.domcontainer.appendChild(eles.headpage);
-        }, 4600); //本来应该是4100但是因为4100会导致提前结束 所以只能改成4600
+        }, 6600); //本来应该是4100但是因为4100会导致提前结束 所以只能改成4600
     }
     var loadpages = function () {
         var table = document.getElementsByClassName('page');
