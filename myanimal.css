@@ -33,23 +33,23 @@
         transform: translateX(0%) scaleX(0.95) scaleY(0.95);
     }
     80% {
-        transform: translateX(-130%) scaleX(0.95) scaleY(0.95);
+        transform: translateX(-100%) scaleX(0.95) scaleY(0.95);
     }
     100% {
-        transform: translateX(-130%) scaleX(1) scaleY(1);
+        transform: translateX(-100%) scaleX(1) scaleY(1);
     }
 }
 
 .ani-page-left-out {
-    animation: ani-page-left-out 2s ease 0.1s 1 normal;
+    animation: ani-page-left-out 1.5s ease 0.1s 1 normal;
 }
 
 @keyframes ani-page-left-in {
     0% {
-        transform: translateX(130%) scaleX(1) scaleY(1);
+        transform: translateX(100%) scaleX(1) scaleY(1);
     }
     20% {
-        transform: translateX(130%) scaleX(0.95) scaleY(0.95);
+        transform: translateX(100%) scaleX(0.95) scaleY(0.95);
     }
     80% {
         transform: translateX(0%) scaleX(0.95) scaleY(0.95);
@@ -60,7 +60,7 @@
 }
 
 .ani-page-left-in {
-    animation: ani-page-left-in 2s ease 0.1s 1 normal;
+    animation: ani-page-left-in 1.5s ease 0.1s 1 normal;
 }
 
 

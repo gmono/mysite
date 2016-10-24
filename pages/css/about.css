@@ -1,0 +1,37 @@
+#about>.page-container {
+    background-image: url('/image/LOLI1.jpg');
+    font-family: 'kitty-miao';
+}
+
+.about-content-left,
+.about-content-right {
+    display: inline-block;
+    margin-top: 5%;
+    margin-bottom: 10%;
+    height: 80%;
+    line-height: 220%;
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #ffe5ac;
+    text-shadow: 2px 2px 2px rgba(204, 136, 7, 0.7), -2px -2px 2px rgba(219, 146, 7, 0.48);
+}
+
+.about-content-left {
+    float: left;
+    width: 43%;
+}
+
+.about-content-right {
+    float: right;
+    width: 57%;
+}
+
+.about-content-left>p {
+    text-align: right;
+    margin-right: 5em;
+}
+
+.about-content-right>p {
+    text-align: left;
+    margin-left: 5em;
+}

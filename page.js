@@ -72,7 +72,7 @@ transfuns.缩放左平移 = function (outnode, innode) {
         eles.domcontainer.appendChild(outnode);
         outnode.removeClass('ani-page-left-out');
         innode.removeClass('ani-page-left-in'); //执行动画
-    }, 2000);
+    }, 1600);
 };
 transfuns.渐进隐现 = function (outnode, innode) {
     eles.main_viewport.insertBefore(innode, outnode);
@@ -82,7 +82,7 @@ transfuns.渐进隐现 = function (outnode, innode) {
         eles.domcontainer.appendChild(outnode);
         outnode.removeClass('ani-page-yin');
         innode.removeClass('ani-page-xian');
-    }, 1500);
+    }, 1600);
 };
 transfuns.随机 = function (outnode, innode) {
     var table = [transfuns.渐进隐现, transfuns.缩放左平移];
