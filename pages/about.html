@@ -1,11 +1,63 @@
 <div class="page-container">
     <link rel="stylesheet" href="pages/css/about.css">
-    <div class="about-content-left">
-        <p>昵称：</p>
-        <p>姓名：</p>
-    </div>
-    <div class="about-content-right">
-        <p>月落</p>
-        <p>高子健</p>
+    <div class='page-backimg'></div>
+    <div class="about-content" id="about_content">
+        <div class="about-text-content" id="about_text_content">
+            <div class="about-content-left">
+                <p>昵称：</p>
+                <p>姓名：</p>
+                <p>年龄：</p>
+                <p>生日：</p>
+                <p>爱好：</p>
+            </div>
+            <div class="about-content-right">
+                <p>月落</p>
+                <p>高子健</p>
+                <p>19</p>
+                <p>1997年4月11日</p>
+                <p>计算机 萌妹子 灵学</p>
+            </div>
+        </div>
+        <div class="about-ewm-content" id="about_ewm_content">
+            <!--            二维码部分--><img src="/image/qrcode/月落.jpg"><img src="/image/qrcode/仙界qr.png"><img src="/image/qrcode/启示.png"> </div>
     </div>
 </div>
+<script>
+    addinit(function () {
+        //监听resize 查询宽度
+        var quwid = function () {
+            var anode = document.getElementById('about_text_content');
+            var enode = document.getElementById('about_ewm_content');
+            if (document.body.clientWidth < 700) {
+                anode.style.width = '100%';
+                enode.style.width = '100%';
+            }
+            else {
+                anode.style.width = "43%";
+                enode.style.width = "53%";
+            }
+            //判断content高度调整字体
+            if (document.body.clientHeight < 500) {
+                anode.style.lineHeight = "1em";
+            }
+            else anode.style.lineHeight = "2em";
+            //判断是否滚动
+            var testfun = function (tnode) {
+                return tnode.offsetTop + tnode.offsetHeight > document.body.clientHeight;
+            };
+            if (testAny(GetAllChildren(document.getElementById('about_content')), testfun)) {
+                var cnode = document.getElementById('about_content');
+                cnode.style.overflow = "scroll";
+            }
+            else {
+                var cnode = document.getElementById('about_content');
+                cnode.style.overflow = "hidden";
+            }
+        }
+        window.addEventListener('resize', function () {
+            quwid();
+        });
+        dynamicscript_debug();
+        about_fun = quwid;
+    });
+</script>

@@ -16,7 +16,7 @@
 }
 
 .ani-head {
-    animation: ani-head 6s linear 0.1s 1 normal;
+    animation: ani-head 6s linear 0.1s 1 normal forwards;
 }
 
 
@@ -41,7 +41,7 @@
 }
 
 .ani-page-left-out {
-    animation: ani-page-left-out 1.5s ease 0.1s 1 normal;
+    animation: ani-page-left-out 1.5s ease 0.1s 1 normal forwards;
 }
 
 @keyframes ani-page-left-in {
@@ -60,7 +60,7 @@
 }
 
 .ani-page-left-in {
-    animation: ani-page-left-in 1.5s ease 0.1s 1 normal;
+    animation: ani-page-left-in 1.5s ease 0.1s 1 normal forwards;
 }
 
 
@@ -91,9 +91,9 @@
 }
 
 .ani-page-yin {
-    animation: ani-page-yin 1.5s ease-out 0.1s 1 normal;
+    animation: ani-page-yin 1.5s ease-out 0.1s 1 normal forwards;
 }
 
 .ani-page-xian {
-    animation: ani-page-xian 1.5s ease-in 0.1s 1 normal;
+    animation: ani-page-xian 1.5s ease-in 0.1s 1 normal forwards;
 }

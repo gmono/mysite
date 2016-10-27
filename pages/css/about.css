@@ -1,19 +1,30 @@
-#about>.page-container {
+#about .page-backimg {
     background-image: url('/image/LOLI1.jpg');
+}
+
+.about-content {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    overflow: scroll;
+}
+
+.about-text-content {
     font-family: 'kitty-miao';
+    width: 43%;
+    line-height: 2em;
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #ffe5ac;
+    text-shadow: 2px 2px 2px rgba(204, 136, 7, 0.7), -2px -2px 2px rgba(219, 146, 7, 0.48);
+    display: inline-block;
 }
 
 .about-content-left,
 .about-content-right {
     display: inline-block;
     margin-top: 5%;
-    margin-bottom: 10%;
     height: 80%;
-    line-height: 220%;
-    font-size: 1.8em;
-    font-weight: bold;
-    color: #ffe5ac;
-    text-shadow: 2px 2px 2px rgba(204, 136, 7, 0.7), -2px -2px 2px rgba(219, 146, 7, 0.48);
 }
 
 .about-content-left {
@@ -27,11 +38,35 @@
 }
 
 .about-content-left>p {
-    text-align: right;
-    margin-right: 5em;
+    text-align: center;
 }
 
 .about-content-right>p {
-    text-align: left;
-    margin-left: 5em;
+    text-align: center;
+}
+
+.about-ewm-content {
+    display: inline-block;
+    width: 53%;
+}
+
+.about-ewm-content {
+    text-align: center;
+    vertical-align: top;
+    margin-top: 5%;
+}
+
+.about-ewm-content>img {
+    width: 40%;
+    height: 40%;
+    opacity: 0.2;
+    transition: all 0.5s linear;
+}
+
+.about-ewm-content>img:hover {
+    opacity: 1;
+}
+
+.about-ewm-content:last-child:after {
+    content('微信');
 }

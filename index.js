@@ -33,6 +33,25 @@ addinit(function () {
             loader.loadToNode(table[i], "./pages/{0}.html".format(id));
         }
     }
+    var navsize = function () {
+        //调整侧边栏尺寸的代码
+        var fun = function () {
+            if (document.body.clientHeight < 560) {
+                classReset('navbutton', 'navbutton-min');
+            }
+        };
+        window.addEventListener('resize', fun);
+        fun();
+    }
     head();
     loadpages();
+    navsize();
+    //调用主页的相应函数
+    eval("main_fun();");
 });
+
+function rescandom() {
+    //这个是本页面里定义的函数与frame.js无关
+    eles.clear();
+    scandom(document.body, eles);
+}

@@ -60,6 +60,17 @@ body {
     top: 0;
     left: 0;
     overflow: hidden;
+    /*    page不显示多余部分，要显示多余，需要每个页面自己设定*/
+}
+
+
+/*页面背景图统一样式*/
+
+.page-backimg {
+    position: fixed;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
 }
 
 
@@ -105,6 +116,17 @@ body {
     position: relative;
     transition: all 0.5s ease;
     /*    overflow: hidden;*/
+}
+
+.navbutton-min {
+    height: 40px;
+    position: relative;
+    transition: all 0.5s ease;
+    /*    overflow: hidden;*/
+}
+
+.navbutton-min .navimgcont {
+    display: none;
 }
 
 .navimgcont {

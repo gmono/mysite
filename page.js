@@ -100,8 +100,9 @@ var map = {
     , btn3: 'album'
     , btn4: 'info'
     , btn5: 'about'
-}
-
+};
+//预定义页面切换函数
+var about_fun = function () {}; //剩下的没有加
 function pagetrans(btn) {
     //页面切换函数
     var id = btn.id;
@@ -118,4 +119,6 @@ function pagetrans(btn) {
     //更新目前的页面和按钮的记录
     nowbtnid = id;
     nowpageid = pid;
+    //调用页面的enter函数（页面名_fun）
+    eval("{0}_fun();".format(pid));
 }
