@@ -1,21 +1,23 @@
 /*字体相关*/
 
+/*
 @font-face {
     font-family: 'lingxin';
-    src: url('font/mini-lingxin.woff');
+    src: url('font/mini-lingxin.ttf');
 }
+*/
 
 @font-face {
     font-family: 'kitty-miao';
-    src: url('font/kitty-miao.woff');
+    src: url('font/kitty-miao.ttf');
 }
 
 @font-face {
     font-family: 'shaonv';
-    src: url('font/hg-shaonv-w5.woff');
+    src: url('font/hg-shaonv-w5.ttf');
 }
 
 @font-face {
     font-family: 'jianzhi';
-    src: url('font/xt-jianzhi.woff');
+    src: url('font/xt-jianzhi.ttf');
 }
