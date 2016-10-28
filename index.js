@@ -39,6 +39,7 @@ addinit(function () {
             if (document.body.clientHeight < 560) {
                 classReset('navbutton', 'navbutton-min');
             }
+            else classReset('navbutton-min', 'navbutton');
         };
         window.addEventListener('resize', fun);
         fun();

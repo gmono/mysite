@@ -116,7 +116,8 @@ Element.prototype.addClass = function (classname) {
 Element.prototype.removeClass = function (classname) {
         var classes = this.GetClasses();
         if (classes.contains(classname)) {
-            classes.splice(classes.indexOf(classname));
+            var index = classes.indexOf(classname);
+            classes.splice(index, 1);
             this.className = GetStringFormArray(classes, ' ');
         }
     }
@@ -158,10 +159,20 @@ loader.loadToNode = function (node, url) {
     //类批量操作
 function classReset(oclass, nclass) {
     var nodes = document.getElementsByClassName(oclass);
-    for (var t = 0; t < nodes.length; t++) {
-        var node = nodes[t];
+    var length = nodes.length;
+    for (var t = 0; t < length; t++) {
+        var node = nodes[0]; //html集合会自动根据情况变化所以reset时需要这样重复访问第一个
         node.removeClass(oclass);
         node.addClass(nclass);
+    }
+}
+
+function classAppend(oclass, nclass) {
+    //为某个类的所有节点添加新类
+    var nodes = document.getElementsByClassName(oclass);
+    for (var t = 0; t < nodes.length; t++) {
+        var node = nodes[t];
+        node.addClass(nclass); //直接添加不删除
     }
 }
 //以下是批量操作函数

@@ -125,8 +125,16 @@ body {
     /*    overflow: hidden;*/
 }
 
+.navbutton-min .navtext {
+    opacity: 1;
+}
+
 .navbutton-min .navimgcont {
     display: none;
+}
+
+.navbutton-min .navtext:hover {
+    background-color: rgba(255, 255, 255, 0.45);
 }
 
 .navimgcont {
@@ -215,6 +223,19 @@ hr.btn {
     border-bottom: 30px solid transparent;
     border-right: 12px solid azure;
     margin-top: -30px;
+}
+
+
+/*小导航栏特殊样式*/
+
+
+/*以下是小导航栏*/
+
+.navbutton-min.navactive:hover:after {
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    border-right: 12px solid azure;
+    margin-top: -15px;
 }
 
 

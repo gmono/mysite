@@ -97,3 +97,58 @@
 .ani-page-xian {
     animation: ani-page-xian 1.5s ease-in 0.1s 1 normal forwards;
 }
+
+@keyframes ani-page-left-x-in {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0%);
+    }
+}
+
+@keyframes ani-page-left-x-out {
+    from {
+        transform: translateX(0%);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+.ani-page-left-x-in {
+    animation: ani-page-left-x-in 1s ease 0.1s 1 normal forwards;
+}
+
+.ani-page-left-x-out {
+    animation: ani-page-left-x-out 1s ease 0.1s 1 normal forwards;
+}
+
+
+/*这是上下运行*/
+
+@keyframes ani-page-up-in {
+    from {
+        transform: translateY(-100%);
+    }
+    to {
+        transform: translateY(0%);
+    }
+}
+
+@keyframes ani-page-up-out {
+    from {
+        transform: translateY(0%);
+    }
+    to {
+        transform: translateY(100%);
+    }
+}
+
+.ani-page-up-out {
+    animation: ani-page-up-in 1s ease 0.1s 1 normal forwards;
+}
+
+.ani-page-up-out {
+    animation: ani-page-up-out 1s ease 0.1s 1 normal forwards;
+}

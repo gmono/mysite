@@ -84,9 +84,30 @@ transfuns.渐进隐现 = function (outnode, innode) {
         innode.removeClass('ani-page-xian');
     }, 1600);
 };
+transfuns.直接左平移 = function (outnode, innode) {
+    eles.main_viewport.insertBefore(innode, outnode);
+    outnode.addClass('ani-page-left-x-out');
+    innode.addClass('ani-page-left-x-in'); //执行动画
+    setTimeout(function () {
+        eles.domcontainer.appendChild(outnode);
+        outnode.removeClass('ani-page-left-x-out');
+        innode.removeClass('ani-page-left-x-in'); //执行动画
+    }, 1100);
+};
+transfuns.直接上平移 = function (outnode, innode) {
+    eles.main_viewport.insertBefore(innode, outnode);
+    outnode.addClass('ani-page-up-out');
+    innode.addClass('ani-page-up-in'); //执行动画
+    setTimeout(function () {
+        eles.domcontainer.appendChild(outnode);
+        outnode.removeClass('ani-page-up-out');
+        innode.removeClass('ani-page-up-in'); //执行动画
+    }, 1100);
+};
 transfuns.随机 = function (outnode, innode) {
-    var table = [transfuns.渐进隐现, transfuns.缩放左平移];
-    var index = parseInt(Math.random() * 10) % 2;
+    //以下缩放左平移感觉不好看就展示屏蔽了
+    var table = [transfuns.渐进隐现, /*transfuns.缩放左平移,*/ transfuns.直接左平移, transfuns.直接上平移];
+    var index = parseInt(Math.random() * 10) % table.length;
     var fun = table[index];
     fun(outnode, innode);
 };
@@ -114,8 +135,8 @@ function pagetrans(btn) {
     //transfuns.渐进隐现(outele, inele);
     transfuns.随机(outele, inele);
     //设置激活的按钮
-    document.getElementById(nowbtnid).className = "navbutton";
-    document.getElementById(id).className = "navbutton navactive";
+    document.getElementById(nowbtnid).removeClass('navactive');
+    document.getElementById(id).addClass('navactive');
     //更新目前的页面和按钮的记录
     nowbtnid = id;
     nowpageid = pid;

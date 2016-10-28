@@ -57,14 +57,16 @@
 }
 
 .about-ewm-content>img {
-    width: 40%;
-    height: 40%;
+    width: 35%;
+    height: 35%;
     opacity: 0.2;
     transition: all 0.5s linear;
+    margin: 10px;
 }
 
 .about-ewm-content>img:hover {
     opacity: 1;
+    box-shadow: 5px 5px 3px rgba(0, 0, 0, 0.4);
 }
 
 .about-ewm-content:last-child:after {
