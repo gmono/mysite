@@ -16,8 +16,8 @@ var transfuns = {};
 //    innode.style.transform = "translateX(130%)";
 //    innode.style.left = "0";
 //    //装入innode
-//    eles.main_viewport.appendChild(innode);
-//    //eles.main_viewport.insertBefore(innode, outnode);
+//    eles.index_viewport.appendChild(innode);
+//    //eles.index_viewport.insertBefore(innode, outnode);
 //    //缩放
 //    outnode.style.transform = scaltext;
 //    innode.style.transform += scaltext;
@@ -48,7 +48,7 @@ var transfuns = {};
 //    //    innode.style.opacity = '0';
 //    //    innode.style.left = '0';
 //    //    innode.style.top = "-25%";
-//    //    eles.main_viewport.appendChild(innode); //把innode放在outnode的上面
+//    //    eles.index_viewport.appendChild(innode); //把innode放在outnode的上面
 //    //    //进入第一次状态调整
 //    //    innode.style.top = "0";
 //    //    innode.style.opacity = "1";
@@ -65,7 +65,7 @@ var transfuns = {};
 //动画相关
 //向左平移
 transfuns.缩放左平移 = function (outnode, innode) {
-    eles.main_viewport.insertBefore(innode, outnode);
+    eles.index_viewport.insertBefore(innode, outnode);
     outnode.addClass('ani-page-left-out');
     innode.addClass('ani-page-left-in'); //执行动画
     setTimeout(function () {
@@ -75,7 +75,7 @@ transfuns.缩放左平移 = function (outnode, innode) {
     }, 1600);
 };
 transfuns.渐进隐现 = function (outnode, innode) {
-    eles.main_viewport.insertBefore(innode, outnode);
+    eles.index_viewport.insertBefore(innode, outnode);
     outnode.addClass('ani-page-yin');
     innode.addClass('ani-page-xian');
     setTimeout(function () {
@@ -85,7 +85,7 @@ transfuns.渐进隐现 = function (outnode, innode) {
     }, 1600);
 };
 transfuns.直接左平移 = function (outnode, innode) {
-    eles.main_viewport.insertBefore(innode, outnode);
+    eles.index_viewport.insertBefore(innode, outnode);
     outnode.addClass('ani-page-left-x-out');
     innode.addClass('ani-page-left-x-in'); //执行动画
     setTimeout(function () {
@@ -95,7 +95,7 @@ transfuns.直接左平移 = function (outnode, innode) {
     }, 1100);
 };
 transfuns.直接上平移 = function (outnode, innode) {
-    eles.main_viewport.insertBefore(innode, outnode);
+    eles.index_viewport.insertBefore(innode, outnode);
     outnode.addClass('ani-page-up-out');
     innode.addClass('ani-page-up-in'); //执行动画
     setTimeout(function () {

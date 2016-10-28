@@ -1,3 +1,102 @@
 #main>.page-container {
-    background-image: url("/image/白夜茶会2.jpg");
+    background-image: url("../../image/白夜茶会2.jpg");
+    font-family: 'kitty-miao';
+}
+
+#main_content {
+    margin: 5% 0 0 5%;
+    width: 90%;
+    height: 650px;
+}
+
+#main_content_down {
+    margin-top: 5%;
+}
+
+.main-subcontent-1 {
+    height: 35%;
+}
+
+.main-subcontent-2 {
+    display: inline-block;
+    height: 100%;
+    width: 42%;
+    margin-left: 5%;
+    position: relative;
+}
+
+@media screen and (max-height:600px) {
+    #main>.page-container {
+        overflow: scroll;
+    }
+}
+
+@media screen and (max-width:650px) {
+    /*    这是响应宽度变小时的样式*/
+    .main-subcontent-2 {
+        display: block;
+        width: 100%;
+        height: 50%;
+        margin-left: 0;
+        margin-top: 10%;
+    }
+    #main>.page-container {
+        overflow: scroll;
+    }
+    /*
+    #main_content .page-plane {
+        height: 50%;
+    }
+*/
+    .main-subcontent-1 {
+        height: 70%;
+    }
+    #main_content_down {
+        margin-top: 20%;
+    }
+    #main_content {
+        margin: 0;
+    }
+}
+
+.main-content-text {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    height: 100%;
+    width: 100%;
+}
+
+#main_content .page-plane {
+    margin: 10px;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
+
+.main-text {
+    text-align: center;
+    color: #ff6781;
+}
+
+.main-text p {
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+#main_content_top_left .main-text p {
+    font-weight: 700;
+    font-size: 1.5em;
+}
+
+#main_content_top_right .main-text p {
+    text-indent: 2em;
+}
+
+#main_content_down-left .main-text p {
+    text-indent: 2em;
+}
+
+#main_content_down-right .main-text p {
+    text-indent: 2em;
 }

@@ -5,4 +5,43 @@
     width: 100%;
     background-repeat: no-repeat;
     background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
 }
+
+
+/*//统一面板样式*/
+
+.page-plane {
+    /*    这他娘的是从设计器上获得的代码，深刻体会到了人类文明的精髓：制造工具*/
+    -moz-box-shadow: 0px 0px 20px 10px #ffd5c4;
+    -webkit-box-shadow: 0px 0px 20px 10px #ffd5c4;
+    box-shadow: 0px 0px 20px 10px #ffd5c4;
+    /*IE 7 AND 8 DO NOT SUPPORT BLUR PROPERTY OF SHADOWS*/
+    /*IE 7 AND 8 DO NOT SUPPORT SPREAD PROPERTY OF SHADOWS*/
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ffdbe5', endColorstr='#f0c3d2');
+    /*INNER ELEMENTS MUST NOT BREAK THIS ELEMENTS BOUNDARIES*/
+    /*Element must have a height (not auto)*/
+    /*All filters must be placed together*/
+    -ms-filter: "progid: DXImageTransform.Microsoft.gradient(startColorstr = '#ffdbe5', endColorstr = '#f0c3d2')";
+    /*Element must have a height (not auto)*/
+    /*All filters must be placed together*/
+    background-image: -moz-linear-gradient(top, #ffdbe5, #f0c3d2);
+    background-image: -ms-linear-gradient(top, #ffdbe5, #f0c3d2);
+    background-image: -o-linear-gradient(top, #ffdbe5, #f0c3d2);
+    background-image: -webkit-gradient(linear, center top, center bottom, from(#ffdbe5), to(#f0c3d2));
+    background-image: -webkit-linear-gradient(top, #ffdbe5, #f0c3d2);
+    background-image: linear-gradient(top, #ffdbe5, #f0c3d2);
+    /*--IE9 DOES NOT SUPPORT GRADIENT BACKGROUNDS--*/
+    opacity: 0.65;
+    -ms-filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=65);
+    /*-ms-filter must come before filter*/
+    filter: alpha(opacity=65);
+    /*INNER ELEMENTS MUST NOT BREAK THIS ELEMENTS BOUNDARIES*/
+    /*All filters must be placed together*/
+}
+
+
+/*统一图片块样式*/

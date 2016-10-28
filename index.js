@@ -30,7 +30,7 @@ addinit(function () {
         for (var i = 0; i < table.length; i++) {
             var id = table[i].id;
             //            eval("load.loadToNode(document.getElementById('{0}'),'pages/{1}.html');".format(name, name)); //运行指令
-            loader.loadToNode(table[i], "./pages/{0}.html".format(id));
+            loader.loadToNode(table[i], "pages/{0}.html".format(id));
         }
     }
     var navsize = function () {
