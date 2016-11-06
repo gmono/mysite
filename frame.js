@@ -130,9 +130,10 @@ Element.prototype.removeClass = function (classname) {
     //    while (!isend);
     //}
 var loader = {};
-loader.loadfile = function (url, fun) {
+loader.loadfile = function (url, fun, async) {
+    if (async == undefined || async == null) async = true; //默认同步模式
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', url);
+    xhr.open('GET', url, async);
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
             var text = xhr.responseText;

@@ -1,57 +1,189 @@
-//模板引擎
-/*
-模板引擎介绍
-模板引擎对象接受一个模板域id 模板域必须是个garea标签 并且其中的一级子标签必须都是gtemplate
-模板的名字右gname属性定义
- */
-var GTemplate = {};
-GTemplate.Enginer = function (areaname) {
-    //engine对象
-    if (areaname == undefined || areaname == null || areaname == "") throw "错误，模板域名称不能为空";
-    var areanode = document.getElementById(areaname);
-    if (areanode == null || areanode == undefined || areanode.tagName != 'GAREA') throw "错误，模板域信息错误";
-    var tnodes = areanode.childNodes;
-    var gnodes = []; //这是template的列表
-    for (var t = 0; t < tnodes.length; ++t) switch (tnodes[t].nodeName) {
-        case '#text':
-            continue;
-        case 'GAREA':
-            gnodes.push(tnodes[t]);
-            break;
-        default:
-            throw "错误，不能存在其他标签";
-        }
-        //把模板加入模板列表
-    this.TemplateList = {};
-    this.Parse = function (tempnode) {
-        //解析模板 返回{tempnode:tempnode,textnode:[],htmlnode:[]}
-        //value都有一个节点和一个名字
+//模板引擎 依赖frame.js
+///以上是旧的模板引擎设计
+//以及定义
+//插件格式主对象定义：主对象存储在GTlate.Plugins中，每个对象有一个专用的识别名
+//主对象格式： Parse函数：function(tlnode,contobj);tlnode为模板节点 contobj为单一viewer中的此插件专用的容器对象；
+//Render函数：function(tlnode,contobj,userdata);此函数接受一个模板节点的副本和一个viewer中存储此对象信息的容器，并根据用户数据(userdata)对模板节点副本中内容进行修改
+//注意Render函数的掉用顺序和插件的声明顺序相同  请注意相互作用
+//注意 理想情况下假设不同插件互不影响
+//预定义变量 Name:唯一插件名 UNameSpace:用户数据命名空间
+GTlate = {}; //模板引擎容器对象
+GTlate.GenTools = {}; //工具函数集合 其中有例如从文本到dom节点的转换之类的工具函数
+GTlate.Plugins = {};
+GTlate.Plugins.List = {}; //插件列表 保存由pname->PluginContentObject的映射
+//注意此处有两种对象 一种为插件主对象 一种为插件信息对象PluginContentObject 
+//插件信息对象结构{mainobj,name,usname};mainobj为主对象 name为插件名 usname为用户数据命名空间名
+GTlate.Plugins.Load = function (text) {}; //从文本加载插件 注意重名插件则不加载或者覆盖
+GTlate.Plugins.LoadFile = function (path) {}; //从文件加载插件
+GTlate.Plugins.CoverLoad = false; //策略 指定是否覆盖加载 若为false则重名插件不加载
+GTlate.Areas = {};
+GTlate.Areas.Area = function (anode) {};
+GTlate.Areas.LoadFromText = function (text) {};
+GTlate.Areas.LoadFromFile = function (path) {}; //从指定文件加载一个area对象列表 顺序为文件中的顺序
+GTlate.Areas.LoadFromId = function (id) {}; //从指定id的Area节点加载一个 Area对象
+GTlate.View = {}; //视图相关容器
+GTlate.View.Viewer = function (tlnode, pnlist) {}; //视图对象 一般由Area对象创建
+GTlate.View.LoadFromId = function (nid, pnlist) {}; //从指定id的Gtemplate节点加载一个Viewer
+GTlate.View.RenderObj = function (viewobj, userdata) {}; //用户数据绑定对象 用于重复渲染
+//二级定义
+GTlate.Areas.Area = function (anode) {
+    //这里定义Area对象
+    //Area对象对应一个Area节点 
+    //Area节点内部有两种子元素 一种是PluginDef标签 属性src对应插件js文件链接 如果没有src属性或者src为空 则自动以其内部的文本作为插件js文本
+    //第二种为GTemplate元素  此元素对应一个模板 其属性为
+    //1：展开模式 otype 属性值有inner contain normal三种 具体在说明文件中
+    //2：模板名(在此模板域中不可重复) tempid
+    //以下为二级定义
+    //校验部分
+    if (anode == null || anode == undefined || anode.nodeName != 'GAREA') return;
+    //以上限定area标签名
+    this.GetListAsObj = function () {
+        //此函数为将模板字典变成一个对象
+        //对象的属性值与字典的键值对一一对应
         var ret = {};
-        ret.tempnode = tempnode;
-        ret.textnode = {};
-        ret.htmlnode = {};
-        var istext = function (str) {}; //都返回一个pnodename 如果不是就返回null
-        var ishtml = function (str) {};
-        var allnodes = GetAllChildren(tempnode);
-        for (var t = 0; t < allnodes.length; ++t) {
-            var pnodename = "";
-            var pnode = allnodes[t];
-            switch (pnode.nodeName) {
-            case '#text':
-                if ((pnodename = istext(pnode.nodeValue)) != null && !(pnodename in ret.textnode || pnodename in ret.htmlnode)) ret.textnode[pnodename] = pnode;
-                else if ((pnodename = ishtml(pnode.nodeValue)) != null && !(pnodename in ret.textnode || pnodename in ret.htmlnode)) ret.htmlnode[pnodename] = pnode;
+        //构造对象
+        for (var t in this.ViewerSet) {
+            eval("ret.{0}={1};".format(t, this.ViewerSet[t]));
+        }
+        return ret;
+    };
+    this.Of = function (name) {
+        //此函数为从模板名字获取viewer对象的函数
+        return this.ViewerSet[name];
+    };
+    //以下为初始化代码 作用为解析area标签 得到插件列表和模板列表(对应的一个viewer表)
+    //处理插件定义的部分
+    this.PluginList = [];
+    var plugtexts = GTlate.GenTools.GetNodes(anode, "GPLUGIN", false);
+    for (var t = 0; t < plugnodes.length; t++) {
+        GTlate.Plugins.Load(plugtexts[t]); //加载每个插件
+        this.PluginList.push(plugtexts[t]); //记录此area的插件表
+        //注意此处存在一个细节 即插件定义在前面的优先记录 也就是说Render时的插件渲染函数执行顺序是按照定义顺序来的
+        //此处假设不同插件互不影响 但是由于某些原因 有时确实存在影响因此 需要注意此顺序问题
+    }
+    //处理模板列表部分
+    this.ViewerSet = {};
+    var tempnodes = GTlate.GenTools.GetNodes(anode, "GTEMPLATE", false);
+    for (var t = 0; t < tempnodes.length; ++t) {
+        var name = tempnodes[t].getAttribute('tlname'); //模板名字
+        this.ViewerSet[name] = new GTlate.View.Viewer(tempnodes[t], this.PluginList); //用指定的模板节点和固定的插件列表创建一个viewer并加入set
+    }
+    //that's all
+};
+GTlate.View.Viewer = function (tlnode, pnlist) {
+    //此为视图器对象
+    //校验阶段
+    //所有处理具体模板节点的代码都在此对象中
+    if (tlnode.nodeName != 'GTEMPLATE') return; //不允许非GTemplate标签
+    //声明阶段
+    this.infolist = {};
+    this.infolist.tlnode = tlnode; //保存模板节点
+    this.infolist.infos = {}; //保存插件信息 每个插件对应一个同名的对象容器
+    this.infolist.upmap = {}; //保存插件名到用户数据命名空间名的映射 以便使用数据命名空间名在userdata中得到用户数据容器
+    this.Render = function (userdata) {}; //渲染函数 从用户数据得到
+    this.GetRenderObj = function (userdata) {}; //渲染到对象的函数 返回一个RenderObj类型对象 此对象有一个Render函数 原型与此类的Render相同
+    //处理插件列表
+    for (var t = 0; t < pnlist.length; t++) {
+        var pname = pnlist[t];
+        var infoobj = GTlate.Plugins.List[pname];
+        //处理infos
+        this.infolist.infos[pname] = {}; //创建一个针对此插件的预定义数据容器
+        //处理upmap
+        this.infolist.upmap[pname] = infoobj['usname']; //做出name到usname的映射
+        //以上为保存模板的信息
+        //以下为调用插件预处理模板得到预定义数据
+        var mainobj = infoobj['mainobj']; //得到主对象
+        mainobj.Parse(tlnode, this.infolist.infos[pname]); //预处理模板
+    };
+    //以上预处理过程结束
+    //具体定义Render和Render到obj
+    var tempthis = this;
+    this.GetRenderObj = function (userdata) {
+        //渲染到对象
+        var ret = new GTlate.View.RenderObj(tempthis, userdata); //创建一个RenderObj对象返回
+        return ret;
+    };
+    var tempinfos = this.infolist.infos;
+    var tempupmap = this.infolist.upmap; //构建临时变量
+    //以下为重点：模板渲染函数
+    this.Render = function (userdata) {
+        //渲染 返回node对象
+        //注意此函数可能返回dom节点也可能返回dom节点列表
+        //具体工作为按顺序掉用插件的Render函数处理模板副本 最后“展开”后返回此副本
+        var SFun = function (ctlnode) {
+            //展开函数用于在处理完模板节点后将其变成可以插入html文档中的dom节点或dom节点列表
+            var type = ctlnode.getAttribute('otype'); //获取模板节点的otype属性 如果没有默认normal
+            switch (type) {
+            case "inner":
+                //此选项为将其内部内容作为一个dom节点列表返回
                 break;
-            case 'GVALUE':
-                //未完待续…………………………………………………………………………
+            case "contain":
+                //此选项将模板节点转变为一个“独立定位块”也就是外一层普通div加内一层相对布局的div
+                break;
+            default:
+                //此为默认选项就即normal 当没有指定otype时默认为此选项
+                //此选项将gtemplate节点的tagname变成div后返回
+                break;
             }
+        };
+        //得到模板节点的副本
+        var copytl = GTlate.GenTools.GetNodeFromText("<div>{0}</div>".format(tlnode.innerHTML));
+        //以下开始处理模板节点的副本
+        for (var t = 0; t < pnlist.length; t++) {
+            //这里遍历插件名称列表 使用插件的Render函数处理模板节点副本
+            var infoobj = GTlate.Plugins.List[pnlist[t]]; //得到信息对象
+            var mainobj = infoobj.mainobj; //得到插件主对象
+            var pname = pnlist[t]; //此为插件名
+            var cont = tempinfos[pname]; //得到其预定义数据容器
+            var udata = userdata[tempupmap[pname]]; //得到用户数据容器
+            mainobj.Render(copytl, cont, udata); //调用render函数处理模板节点副本
+        }
+        var ret = SFun(copytl); //展开副本
+        return ret; //返回副本
+    };
+};
+GTlate.View.RenderObj = function (viewobj, userdata) {
+    this.Render = function () {
+        return viewobj.Render(userdata);
+    };
+};
+//通用函数定义位置
+//文本到dom的函数 返回dom节点容器
+GTlate.GenTools.TextToDom = function (text) {
+    var cont = document.createElement('div');
+    cont.innerHTML = text;
+    return cont;
+}
+GTlate.GenTools.GetNodeFromText = function (text) {
+    return GTlate.GenTools.TextToDom(text).childNodes[0];
+    //返回第一个子元素 适用于文本中只有一个元素的情况
+}
+GTlate.GenTools.GetNodes = function (fnode， nodename, isover) {
+    //此函数为获取指定节点中所有子元素中或者子孙元素中的指定nodename的node
+    var childs = isover ? GetAllChildren(fnode) : fnode.childNodes;
+    var rets = [];
+    for (var i = 0; i < childs.length; ++i) {
+        var n = childs[i];
+        if (n.nodeName == nodename) {
+            rets.push(n);
         }
     }
-    for (var t = 0; t < gnodes.length; ++t) {
-        var gn = gnodes[t];
-        var name = gn.getAttribute('gname');
-        if (name in this.TemplateList) throw "错误，模板名称重复";
-        //加入
-        this.TemplateList[name] = gn;
+    return rets;
+}
+GTlate.GenTools.GetNodeContent = function (node) {
+    //获取指定节点的“内容”
+    //内容可以由src属性指定的文件的内容决定 如果src为空则取其内部的文本
+    //此为“内容获取策略”函数，属策略决定函数集
+    var srcstr = node.getAttribute('src');
+    var ret = "";
+    if (srcstr == null || srcstr == undefined || srcstr == "") ret = node.innerHTMLl;
+    else {
+        //进入获取文件内容的过程
+        var text = null;
+        loader.loadfile(srcstr, function (t) {
+            text = t;
+        }, false); //同步获取文件内容
+        ret = text;
     }
-    //初始化所有模板
+    return ret;
 }
