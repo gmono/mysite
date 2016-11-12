@@ -9,13 +9,13 @@
 //预定义变量 Name:唯一插件名 UNameSpace:用户数据命名空间
 GTlate = {}; //模板引擎容器对象
 GTlate.GenTools = {}; //工具函数集合 其中有例如从文本到dom节点的转换之类的工具函数
-GTlate.Plugins = {};
+GTlate.Plugins = {}; //插件全局相关对象
 GTlate.Plugins.List = {}; //插件列表 保存由pname->PluginContentObject的映射
 //注意此处有两种对象 一种为插件主对象 一种为插件信息对象PluginContentObject 
 //插件信息对象结构{mainobj,name,usname};mainobj为主对象 name为插件名 usname为用户数据命名空间名
 GTlate.Plugins.Load = function (text) {}; //从文本加载插件 注意重名插件则不加载或者覆盖
 GTlate.Plugins.LoadFile = function (path) {}; //从文件加载插件
-GTlate.Plugins.CoverLoad = false; //策略 指定是否覆盖加载 若为false则重名插件不加载
+GTlate.Plugins.CoverLoad = false; //策略 指定是否覆盖加载 若为false则重名插件不加载 此标记在load函数中被使用
 GTlate.Areas = {};
 GTlate.Areas.Area = function (anode) {};
 GTlate.Areas.LoadFromText = function (text) {};
@@ -26,6 +26,39 @@ GTlate.View.Viewer = function (tlnode, pnlist) {}; //视图对象 一般由Area�
 GTlate.View.LoadFromId = function (nid, pnlist) {}; //从指定id的Gtemplate节点加载一个Viewer
 GTlate.View.RenderObj = function (viewobj, userdata) {}; //用户数据绑定对象 用于重复渲染
 //二级定义
+GTlate.Plugins.Load = function (text) {
+    //从文本中加载一个插件
+    //text为符合主对象格式的js文本
+    var Name = null;
+    var UNameSpace = null;
+    //以上为预定义变量
+    //下面构造主对象函数
+    var mainfun = eval("function(){{0}};".format(text));
+    var mainobj = new mainfun(); //调用构造函数得到主对象和预定义变量值
+    if (Name == null || UNameSpace == null) return; //插件加载失败
+    if (!GTlate.Plugins.CoverLoad) {
+        //重名检测
+        if (Name in GTlate.Plugins.List) return;
+    }
+    //开始加载插件流程
+    //检测是否有指定函数
+    if (mainobj.Parse == undefined || mainobj.Parse == null || mainobj.Render == undefined || mainobj.Render == null) return; //加载失败
+    //构造插件信息对象
+    var infoobj = {
+        mainobj: mainobj
+        , name: Name
+        , usname
+    };
+    //插入信息对象表
+    GTlate.Plugins.List[Name] = mainobj; //加载完成
+};
+GTlate.Plugins.LoadFile = function (path) {
+    //从文件中加载插件
+    var text = null;
+    loader.loadfile(path, function (str) {
+        text = str;
+    }, false);
+};
 GTlate.Areas.Area = function (anode) {
     //这里定义Area对象
     //Area对象对应一个Area节点 
@@ -116,18 +149,21 @@ GTlate.View.Viewer = function (tlnode, pnlist) {
             switch (type) {
             case "inner":
                 //此选项为将其内部内容作为一个dom节点列表返回
+                return ctlnode.childNodes;
                 break;
             case "contain":
                 //此选项将模板节点转变为一个“独立定位块”也就是外一层普通div加内一层相对布局的div
+                return GTlate.GenTools.GetNodeFromText("<div>{0}</div>".format(ctlnode.innerHTML));
                 break;
             default:
                 //此为默认选项就即normal 当没有指定otype时默认为此选项
                 //此选项将gtemplate节点的tagname变成div后返回
+                return GTlate.GenTools.GetNodeFromText("<div><div class={0}>{1}</div></div>".format("\"template_innercontainer\"", ctlnode.innerHTML));
                 break;
             }
         };
         //得到模板节点的副本
-        var copytl = GTlate.GenTools.GetNodeFromText("<div>{0}</div>".format(tlnode.innerHTML));
+        var copytl = GTlate.GenTools.GetNodeFromText(tlnode.outerHTML);
         //以下开始处理模板节点的副本
         for (var t = 0; t < pnlist.length; t++) {
             //这里遍历插件名称列表 使用插件的Render函数处理模板节点副本
@@ -138,8 +174,9 @@ GTlate.View.Viewer = function (tlnode, pnlist) {
             var udata = userdata[tempupmap[pname]]; //得到用户数据容器
             mainobj.Render(copytl, cont, udata); //调用render函数处理模板节点副本
         }
-        var ret = SFun(copytl); //展开副本
+        var ret = SFun(copytl); //展开副本 冗余设计 使用统一插件架构完全足够
         return ret; //返回副本
+        //一次中断标记
     };
 };
 GTlate.View.RenderObj = function (viewobj, userdata) {
@@ -147,17 +184,37 @@ GTlate.View.RenderObj = function (viewobj, userdata) {
         return viewobj.Render(userdata);
     };
 };
+GTlate.GenTools.GetElementOfIndex = function (index, list) {
+    //此函数用于获取指定列表中的某一个节点（非文本节点）
+    var sum = 0;
+    for (var t = 0; t < list.length; ++t) {
+        if (list[t].tagName != undefined)
+            if (index == sum) return list[t];
+            else sum++;
+    }
+    return null;
+};
+GTlate.GenTools.GetElementOfIndexAsType = function (index, list, tagname) {
+    //此函数用于获取指定列表中某一个指定tagname的节点
+    for (var t = 0; t < list.length; ++t) {
+        if (list[t].tagName == tagname)
+            if (index == sum) return list[t];
+            else sum++;
+    }
+    return null;
+};
 //通用函数定义位置
 //文本到dom的函数 返回dom节点容器
 GTlate.GenTools.TextToDom = function (text) {
     var cont = document.createElement('div');
     cont.innerHTML = text;
     return cont;
-}
+};
+//从一个只包含一个html节点的文本中获得那一个节点
 GTlate.GenTools.GetNodeFromText = function (text) {
-    return GTlate.GenTools.TextToDom(text).childNodes[0];
+    return GTlate.GenTools.GetElementOfIndex(0, GTlate.GenTools.TextToDom(text).childNodes);
     //返回第一个子元素 适用于文本中只有一个元素的情况
-}
+};
 GTlate.GenTools.GetNodes = function (fnode， nodename, isover) {
     //此函数为获取指定节点中所有子元素中或者子孙元素中的指定nodename的node
     var childs = isover ? GetAllChildren(fnode) : fnode.childNodes;
